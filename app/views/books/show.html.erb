@@ -11,7 +11,7 @@
   		<table class='table'>
   		  <tr>
           <td><%= link_to(@book.user) do %>
-            <%= image_tag @book.user.get_profile_image, size:"100x100" %><br>
+            <%= image_tag @book.user.get_profile_image(100, 100) %><br>
             <%= @book.user.name %>
             <% end %>
           </td>
@@ -23,6 +23,22 @@
             <% end %>
         </tr>
       </table>
+         <div>
+      <p>コメント件数:<%= @book.post_comments.count %></p>
+      <% @book.post_comments.each do |post_comment| %>
+       <p><%= image_tag post_comment.user.get_profile_image(100, 100) %></p>
+        <%= post_comment.user.name %>
+        <% end %>
+      </div>
+
+      <div>
+        <%= form_with model:[@book,@post_comment] do |f| %>
+        <%= f.text_area :comment,rows:'5',placeholder:"コメントをここに" %>
+        <%= f.submit"送信する" %>
+        <% end %>
+      </div>
+
+
     </div>
   </div>
 </div>
