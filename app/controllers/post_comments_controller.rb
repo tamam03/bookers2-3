@@ -1,5 +1,5 @@
 class PostCommentsController < ApplicationController
- def create
+  def create
    book = Book.find(params[:book_id])
    comment =PostComment.new(post_comment_params)
    comment.user_id = current_user.id
@@ -7,14 +7,17 @@ class PostCommentsController < ApplicationController
    comment.save
    redirect_to book_path(book)
 
- end
+  end
 
-
+  def destroy
+   PostComment.find(params[:id]).destroy
+   redirect_to book_path(params[:book_id])
+  end
 
    private
 
-  def post_comment_params
+   def post_comment_params
     params.require(:post_comment).permit(:comment)
-  end
+   end
 
- end
+end
